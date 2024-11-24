@@ -1,0 +1,16 @@
+networks:
+  traefik_proxy:
+    external: true
+
+services:
+  grafana:
+    networks:
+      - default
+      - traefik_proxy
+    labels:
+      - traefik.enable=true
+      ## HTTP Routers
+      - traefik.http.routers.${SERVICE}.entrypoints=web
+      - traefik.http.routers.${SERVICE}.rule=Host(`${DOMAIN}`)
+      - traefik.http.services.${SERVICE}.loadbalancer.server.port=${APP_PORT}
+    
