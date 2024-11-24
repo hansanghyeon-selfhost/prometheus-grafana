@@ -10,7 +10,8 @@ services:
     labels:
       - traefik.enable=true
       ## HTTP Routers
-      - traefik.http.routers.${SERVICE}.entrypoints=web
-      - traefik.http.routers.${SERVICE}.rule=Host(`${DOMAIN}`)
-      - traefik.http.services.${SERVICE}.loadbalancer.server.port=${APP_PORT}
+      - traefik.http.routers.${SERVICE:-prometheus-grafana}.entrypoints=webs
+      - traefik.http.routers.${SERVICE:-prometheus-grafana}.tls.certresolver=leresolver
+      - traefik.http.routers.${SERVICE:-prometheus-grafana}.rule=Host(`${DOMAIN}`)
+      - traefik.http.services.${SERVICE:-prometheus-grafana}.loadbalancer.server.port=${APP_PORT:-3000}
     
